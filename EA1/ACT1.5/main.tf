@@ -3,9 +3,8 @@ resource "aws_key_pair" "mi_key" {
   public_key = "ssh-rsa BAAAB3NzaC1yc2EAAAADAQABAAABAQDiuFUssdtHg8Y3rWGZFCSD58hSr4IqjFVKeid9d0G3bk7w99/AOyL/C45PnFodjOtD1eMndiCd40BqagdOYtKoieqlOTlmShrvE7N2A+MeaOP4CWLx7fj2MfekecPPFRAiMUCZk51SHxFr4oqX4Qhj8BkG1cG30p9QB+stfJKT3tUGczxUB1aor9qoLmPDTfaE4iSmNDscVmqQhX9jkppdzkg2ENh5cDO2EtLlHHxIodXLgetpWjBP68r90q/gwZV69XANcTWjZiZRyDmb9nIfQiZOO5C03FoG0GmTSZkAfvZdq7M2GsQSboln44VW/ukyQKFRVVepOCIHTaqcsjhV"
 }
 
-# Crear una instancia EC2 de prueba
 resource "aws_instance" "mi_servidor" {
-  ami           = "ami-0c55b159cbfafe1f0" # AMI genérica de Amazon Linux 2
+  ami           = "ami-0c55b159cbfafe1f0"
   instance_type = "t3.micro"
 
   tags = {
