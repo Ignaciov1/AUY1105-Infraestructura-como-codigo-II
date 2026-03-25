@@ -6,7 +6,7 @@ resource "aws_key_pair" "mi_key" {
 # Crear una instancia EC2 de prueba
 resource "aws_instance" "mi_servidor" {
   ami           = "ami-0c55b159cbfafe1f0" # AMI genérica de Amazon Linux 2
-  instance_type = "t2.micro"
+  instance_type = "t3.micro"
 
   tags = {
     Name = "Servidor-Trabajo-Autonomo"
