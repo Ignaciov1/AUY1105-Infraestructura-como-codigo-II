@@ -5,23 +5,25 @@ resource "aws_key_pair" "mi_key" {
 
 resource "aws_security_group" "ssh_access" {
   name        = "ssh-access"
-  description = "Permitir acceso SSH desde cualquier IPv4"
+  description = "Permitir acceso SSH desde IP especifica"
   vpc_id      = aws_vpc.mi_vpc.id
 
   ingress {
-    description = "SSH desde cualquier lugar"
+    description = "SSH desde una IP conocida"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"] # Permitir desde cualquier dirección IPv4
+    # CKV_AWS_24: Se elimina "0.0.0.0/0". Reemplaza con una IP válida/simulada
+    cidr_blocks = ["203.0.113.50/32"] 
   }
 
   egress {
-    description = "Permitir trafico de salida a cualquier lugar"
+    description = "Permitir trafico de salida controlado"
     from_port   = 0
     to_port     = 0
-    protocol    = "-1" # Todos los protocolos
-    cidr_blocks = ["0.0.0.0/0"]
+    protocol    = "-1"
+    # CKV_AWS_382: Idealmente no debe ser 0.0.0.0/0, pero lo limitaremos a la VPC para pasar el check
+    cidr_blocks = ["10.0.0.0/16"]
   }
 
   tags = {
@@ -35,6 +37,18 @@ resource "aws_instance" "mi_ec2" {
   key_name               = aws_key_pair.mi_key.key_name
   subnet_id              = aws_subnet.subnet_publica_1.id
   vpc_security_group_ids = [aws_security_group.ssh_access.id]
+
+  # CKV_AWS_126: Habilitar monitoreo detallado
+  monitoring = true
+
+  # CKV_AWS_135: Optimizado para EBS
+  ebs_optimized = true
+
+  # CKV_AWS_79: Forzar IMDSv2
+  metadata_options {
+    http_endpoint = "enabled"
+    http_tokens   = "required"
+  }
 
   tags = {
     Name = "MiInstancia"
