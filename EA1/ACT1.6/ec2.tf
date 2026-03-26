@@ -13,7 +13,7 @@ resource "aws_security_group" "ssh_access" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    # CKV_AWS_24: Se elimina "0.0.0.0/0". Reemplaza con una IP válida/simulada
+    # CKV_AWS_24: Se usa una IP simulada para evitar el 0.0.0.0/0
     cidr_blocks = ["203.0.113.50/32"] 
   }
 
@@ -22,7 +22,7 @@ resource "aws_security_group" "ssh_access" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    # CKV_AWS_382: Idealmente no debe ser 0.0.0.0/0, pero lo limitaremos a la VPC para pasar el check
+    # CKV_AWS_382: Limitado a la red interna para mayor seguridad
     cidr_blocks = ["10.0.0.0/16"]
   }
 
@@ -38,13 +38,16 @@ resource "aws_instance" "mi_ec2" {
   subnet_id              = aws_subnet.subnet_publica_1.id
   vpc_security_group_ids = [aws_security_group.ssh_access.id]
 
-  # CKV_AWS_126: Habilitar monitoreo detallado
+  # CKV2_AWS_41: Asociar el perfil de instancia IAM (Rol de seguridad)
+  iam_instance_profile   = aws_iam_instance_profile.ec2_profile.name
+
+  # CKV_AWS_126: Monitoreo detallado habilitado
   monitoring = true
 
   # CKV_AWS_135: Optimizado para EBS
   ebs_optimized = true
 
-  # CKV_AWS_79: Forzar IMDSv2
+  # CKV_AWS_79: Forzar IMDSv2 para proteger metadatos
   metadata_options {
     http_endpoint = "enabled"
     http_tokens   = "required"
@@ -55,6 +58,7 @@ resource "aws_instance" "mi_ec2" {
   }
 
   root_block_device {    
+    # CKV_AWS_8: Cifrado de disco habilitado
     encrypted   = true
   }
 }
