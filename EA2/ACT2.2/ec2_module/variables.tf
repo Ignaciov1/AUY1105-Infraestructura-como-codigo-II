@@ -40,3 +40,9 @@ variable "instance_name" {
   type        = string
   default     = "MiInstancia"
 }
+
+variable "security_group_name" {
+  description = "Nombre personalizado para el grupo de seguridad"
+  type        = string
+  default     = "sg-default-ignacio"
+}
