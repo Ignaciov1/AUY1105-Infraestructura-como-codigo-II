@@ -34,3 +34,17 @@ module "ec2" {
   # Pega aquí el contenido del archivo .pub que generaste
   public_key_adicional = "ssh-rsa PEGA_AQUI_EL_TEXTO_DE_LA_LLAVE_NUEVA" 
 }
+
+# --- NUEVO MÓDULO S3 ---
+module "s3_proyecto" {
+  source        = "./s3_module"
+  
+  # Personaliza tu bucket aquí
+  bucket_prefix = "ignacio"
+  bucket_suffix = "lab-infra-2026"
+
+  tags = {
+    Environment = "Dev"
+    Project     = "TechNova"
+  }
+}
