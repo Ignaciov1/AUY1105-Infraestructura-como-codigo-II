@@ -1,10 +1,10 @@
-# Creación del Bucket
+# 1. Creación del Bucket
 resource "aws_s3_bucket" "mi_bucket" {
   bucket = "${var.bucket_prefix}-${var.bucket_suffix}"
   tags   = var.tags
 }
 
-# Habilitar el Versionado
+# 2. Habilitar el Versionado (Requerimiento)
 resource "aws_s3_bucket_versioning" "versioning_example" {
   bucket = aws_s3_bucket.mi_bucket.id
   versioning_configuration {
@@ -12,7 +12,8 @@ resource "aws_s3_bucket_versioning" "versioning_example" {
   }
 }
 
-# Desactivar el bloqueo de acceso público (Necesario para lectura pública)
+# 3. Desactivar bloqueos de acceso público
+# Esto permite que la política de "Solo Lectura" funcione
 resource "aws_s3_bucket_public_access_block" "public_access" {
   bucket = aws_s3_bucket.mi_bucket.id
 
@@ -22,10 +23,11 @@ resource "aws_s3_bucket_public_access_block" "public_access" {
   restrict_public_buckets = false
 }
 
-# Política de acceso público (Solo Lectura)
+# 4. Política de acceso público (Solo Lectura)
 resource "aws_s3_bucket_policy" "read_only_policy" {
   bucket = aws_s3_bucket.mi_bucket.id
-  # Espera a que se desactive el bloqueo de acceso público
+  
+  # IMPORTANTE: Espera a que se desbloquee el acceso público antes de aplicar la política
   depends_on = [aws_s3_bucket_public_access_block.public_access]
 
   policy = jsonencode({

@@ -8,7 +8,7 @@ resource "aws_key_pair" "mi_key" {
 
 # Llave 2: La nueva para las instancias adicionales (Requerimiento)
 resource "aws_key_pair" "key_adicional" {
-  key_name   = "jboy"
+  key_name   = "jboy-2-1"
   public_key = var.public_key_adicional
 }
 
