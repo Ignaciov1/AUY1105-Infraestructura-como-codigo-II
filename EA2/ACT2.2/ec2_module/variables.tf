@@ -35,9 +35,9 @@ variable "instance_name" {
   default     = "MiInstancia"
 }
 
-# Solo dejamos esta versión para cumplir con la actividad autónoma
 variable "security_group_name" {
   description = "Nombre personalizado para el grupo de seguridad"
   type        = string
-  default     = "sg-default-ignacio"
+  # CAMBIO: Quitamos el "sg-" del principio
+  default     = "acceso-ssh-ignacio" 
 }
