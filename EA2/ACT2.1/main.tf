@@ -39,20 +39,18 @@ module "ec2" {
   subnet_id_pub_2      = module.vpc.subnet_publica_2_id
   subnet_id_privada    = module.vpc.subnet_privada_id
 
-  # Llave original para la primera instancia
+  # 1. LLAVE ORIGINAL (La que tenías al principio)
   key_name             = "mi_key_name"
-  public_key           = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCxrRqRug5mdFuiGEl9ovz/UwDcuA/CriuqV1tfUK/OtyA/f/eOLOK38fDAC208GJhFdIJakS2Cjfwgb+DDmWBBvclEY49qXXhdF13J89zx+9I1vRQ92LsR7epe3yZJHHthcRzV+S/sTNoLAcJs/Uyej07Co1MqWJqPYYGGGW1jXyTxluZuAl7xwljZlNgHVotNYDduSiUWeMrZ7+qhSk2NHtB3uzI3qJgfCXoM4PAe+sNdCs48TZXxEPjrRi7hyZd0LeWwPnGxt+v2DHEwiWo5SbRqgmBi73QEwUg4OiGVmCGM2BfF1vdH9JCllIUH6UQOTs+jlqWV4AkRgde6l+gf duocacad\\ma-alumno@MAAWSA02LC1013"
+  public_key           = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDiuFUssdtHg8Y3rWGZFCSD58hSr4IqjFVKeid9d0G3bk7w99/AOyL/C45PnFodjOtD1eMndiCd40BqagdOYtKoieqlOTlmShrvE7N2A+MeaOP4CWLx7fj2MfekecPPFRAiMUCZk51SHxFr4oqX4Qhj8BkG1cG30p9QB+stfJKT3tUGczxUB1aor9qoLmPDTfaE4iSmNDscVmqQhX9jkppdzkg2ENh5cDO2EtLlHHxIodXLgetpWjBP68r90q/gwZV69XANcTWjZiZRyDmb9nIfQiZOO5C03FoG0GmTSZkAfvZdq7M2GsQSboln44VW/ukyQKFRVVepOCIHTaqcsjhV"
 
-  # NUEVA Llave para instancias adicionales (Requerimiento de la tarea) 
-  # Pega aquí el contenido del archivo .pub que generaste
-  public_key_adicional = "ssh-rsa PEGA_AQUI_EL_TEXTO_DE_LA_LLAVE_NUEVA" 
+  # 2. NUEVA LLAVE (La que generaste recién con ssh-keygen)
+  public_key_adicional = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCxrRqRug5mdFuiGEl9ovz/UwDcuA/CriuqV1tfUK/OtyA/f/eOLOK38fDAC208GJhFdIJakS2Cjfwgb+DDmWBBvclEY49qXXhdF13J89zx+9I1vRQ92LsR7epe3yZJHHthcRzV+S/sTNoLAcJs/Uyej07Co1MqWJqPYYGGGW1jXyTxluZuAl7xwljZlNgHVotNYDduSiUWeMrZ7+qhSk2NHtB3uzI3qJgfCXoM4PAe+sNdCs48TZXxEPjrRi7hyZd0LeWwPnGxt+v2DHEwiWo5SbRqgmBi73QEwUg4OiGVmCGM2BfF1vdH9JCllIUH6UQOTs+jlqWV4AkRgde6l+gf duocacad\\ma-alumno@MAAWSA02LC1013"
 }
 
 # --- NUEVO MÓDULO S3 ---
 module "s3_proyecto" {
   source        = "./s3_module"
   
-  # Personaliza tu bucket aquí
   bucket_prefix = "ignacio"
   bucket_suffix = "lab-infra-2026"
 
