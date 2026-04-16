@@ -8,12 +8,6 @@ variable "public_key" {
   type        = string
 }
 
-variable "security_group_name" {
-  description = "Nombre del grupo de seguridad"
-  type        = string
-  default     = "ssh-access"
-}
-
 variable "ami" {
   description = "ID de la AMI para la instancia EC2"
   type        = string
@@ -41,6 +35,7 @@ variable "instance_name" {
   default     = "MiInstancia"
 }
 
+# Solo dejamos esta versión para cumplir con la actividad autónoma
 variable "security_group_name" {
   description = "Nombre personalizado para el grupo de seguridad"
   type        = string
