@@ -1,3 +1,16 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0" # O la versión que prefieras usar
+    }
+  }
+}
+
+provider "aws" {
+  region = "us-east-1" # Asegúrate de que esta sea la región de tu laboratorio
+}
+
 # --- MÓDULO DE RED (VPC) ---
 module "vpc" {
   source                = "./vpc_module"
