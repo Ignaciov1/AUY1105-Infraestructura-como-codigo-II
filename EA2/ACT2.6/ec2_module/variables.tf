@@ -46,9 +46,3 @@ variable "instance_name" {
   type        = string
   default     = "MiInstancia"
 }
-
-variable "use_security_group" {
-  description = "Habilitar o deshabilitar el grupo de seguridad SSH"
-  type        = bool
-  default     = true
-}
